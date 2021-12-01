@@ -3,31 +3,34 @@ import './Form.css';
 import { useState, useEffect, useReducer } from 'react';
 
 // -------------------------------------------- reducer function that is called when action trigger
-// const formReducerFn = (latestState, action) => {
-//   if (action.type === 'NAME') {
-//     return { ...latestState, userName: action.value };
-//   }
-//   if (action.type === 'AMOUNT') {
-//     return { ...latestState, userAmount: action.value };
-//   }
+const formReducerFn = (latestState, action) => {
+  console.log("from formReducerfn", latestState, action)
+  
+  if (action.type === 'NAME') {
+      console.log("from fn username ", latestState, action)
+      return { ...latestState, userName: action.value };
+    }
+    if (action.type === 'AMOUNT') {
+      return { ...latestState, userAmount: action.value };
+    }
 
-//   // default value
-//   return { userName: 'Name', userAmount: 'Amount' };
-// };
+    //   // default value
+    return { userName: 'Name', userAmount: 'Amount' };
+};
 // --------------------------------------------
 function Form() {
   // -------------------------------------------- useReducer
-  // const [formReducer, setFormReducer] = useReducer(formReducerFn, {
-  //   userName: 'Enter Name',
-  //   userAmount: 'Enter Amount',
-  // });
+  const [formReducer, setFormReducer] = useReducer(formReducerFn, {
+    userName: 'Enter Name',
+    userAmount: 'Enter Amount',
+  });
 
   // -------------------------------------------- useState
   const [form, setForm] = useState({
     userName: 'any name',
     userAmount: 'any amount',
   });
-
+form
   // count character
   const [countChar, setCountChar] = useState('');
 
@@ -49,25 +52,27 @@ function Form() {
     return () => {
       clearTimeout(clearTimerID);
     };
+  // }, [form.userName, form.userAmount]);
   }, [form.userName, form.userAmount]);
 
-  // --------------------------------------------
+  // -------------------------------------------------------nameChangeHandler
   const nameChangeHandler = (e) => {
+    setFormReducer({ type: 'NAME', value: e.target.value });
     setForm((prevState) => {
       return { ...prevState, userName: e.target.value };
     });
-    // setFormReducer({ type: 'NAME', value: e.target.value });
+    console.log("from useState", form) // checking useState
   };
 
-  // --------------------------------------------
+  // -------------------------------------------------------amountChangeHandler
   const amountChangeHandler = (e) => {
+    setFormReducer({ type: 'AMOUNT', value: e.target.value });
     setForm((prevState) => {
       return { ...prevState, userAmount: e.target.value };
     });
-    // setFormReducer({ type: 'AMOUNT', value: e.target.value });
   };
-
-  // --------------------------------------------
+  
+  // -------------------------------------------------------formSubmitHandler
   const formSubmitHandler = (e) => {
     e.preventDefault();
     setForm({ userName: '', userAmount: '' }); // reset form after submit
