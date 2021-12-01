@@ -25,11 +25,12 @@ function Form() {
     userAmount: 'Enter Amount',
   });
 
+  const { userName: nameReducer } = formReducer; // object destructuring from formReducer to useEffect dependency 👈
   // -------------------------------------------- useState
-  const [form, setForm] = useState({
-    userName: 'any name',
-    userAmount: 'any amount',
-  });
+  // const [form, setForm] = useState({
+  //   userName: 'any name',
+  //   userAmount: 'any amount',
+  // });
 
   // count character
   const [countChar, setCountChar] = useState('');
@@ -41,9 +42,10 @@ function Form() {
     console.log('once');
 
     const clearTimerID = setTimeout(() => {
-      if (form.userName.length > 0) {
+      // if (formReducer.userName.length > 0) {
+      if (nameReducer.length > 0) {
         console.log(`I am with cleanup 😃 ${millisec} milisecond`);
-        setCountChar((c) => (c = form.userName.length));
+        setCountChar((c) => (c = formReducer.userName.length));
       } else {
         console.log(`should not be empty`);
       }
@@ -52,30 +54,38 @@ function Form() {
     return () => {
       clearTimeout(clearTimerID);
     };
-    // }, [form.userName, form.userAmount]);
-  }, [form.userName, form.userAmount]);
+    // }, [form.userName, form.userAmount]);  // from useState
+    // }, [formReducer.userName, formReducer.userAmount]);   // from formReducer  another way 👇
+    // }, [formReducer.userName]);   // from formReducer if only one dependency
+  }, [nameReducer]); // from formReducer  another way 👆 object destructuring
 
   // -------------------------------------------------------nameChangeHandler
   const nameChangeHandler = (e) => {
     setFormReducer({ type: 'NAME', value: e.target.value });
-    setForm((prevState) => {
-      return { ...prevState, userName: e.target.value };
-    });
-    console.log('from useState', form); // checking useState
+    // setForm((prevState) => {
+    //   return { ...prevState, userName: e.target.value };
+    // });
+    console.log('from nameChangeHandler', formReducer); // checking useState
   };
 
   // -------------------------------------------------------amountChangeHandler
   const amountChangeHandler = (e) => {
     setFormReducer({ type: 'AMOUNT', value: e.target.value });
-    setForm((prevState) => {
-      return { ...prevState, userAmount: e.target.value };
-    });
+    // setForm((prevState) => {
+    //   return { ...prevState, userAmount: e.target.value };
+    // });
   };
 
   // -------------------------------------------------------formSubmitHandler
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    setForm({ userName: '', userAmount: '' }); // reset form after submit
+
+    // reset form after submit - using useState
+    // setForm({ userName: '', userAmount: '' });
+    // reset form after submit - using useReducer
+    setFormReducer({ type: 'NAME', value: '' });
+    setFormReducer({ type: 'AMOUNT', value: '' });
+    setCountChar(0);
   };
   // --------------------------------------------
 
@@ -86,7 +96,7 @@ function Form() {
         <input
           className="input"
           type="text"
-          value={form.userName}
+          value={formReducer.userName}
           onChange={nameChangeHandler}
         />
         {/* {!isValid && (
@@ -95,7 +105,7 @@ function Form() {
         <input
           className="input"
           type="text"
-          value={form.userAmount}
+          value={formReducer.userAmount}
           onChange={amountChangeHandler}
         />
         {/* {!isValid && (
