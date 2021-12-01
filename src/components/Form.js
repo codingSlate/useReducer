@@ -65,7 +65,6 @@ function Form() {
       return { ...prevState, userAmount: e.target.value };
     });
     // setFormReducer({ type: 'AMOUNT', value: e.target.value });
-    console.log('ssssssssss', countChar);
   };
 
   // --------------------------------------------
@@ -82,7 +81,7 @@ function Form() {
         <input
           className="input"
           type="text"
-          // value={form.userName}
+          value={form.userName}
           onChange={nameChangeHandler}
         />
         {/* {!isValid && (
@@ -91,7 +90,7 @@ function Form() {
         <input
           className="input"
           type="text"
-          // value={form.userAmount}
+          value={form.userAmount}
           onChange={amountChangeHandler}
         />
         {/* {!isValid && (
