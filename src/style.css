@@ -1,3 +1,16 @@
-h1, p {
+* {
+  box-sizing: border-box;
+}
+
+h1,
+p {
   font-family: Lato;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: center;
 }

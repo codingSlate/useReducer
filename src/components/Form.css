@@ -1,0 +1,32 @@
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  margin: .5rem auto;
+  padding: .5rem;
+  /* width: 90%;
+  max-width: 40rem; */
+}
+
+.input label {
+  display: block;
+  font-weight: bold;
+}
+
+.input input {
+  font: inherit;
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.input input:focus {
+  outline: none;
+  border-color: #084c99;
+}
