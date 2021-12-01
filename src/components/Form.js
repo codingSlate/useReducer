@@ -13,21 +13,34 @@ const formReducerFn = (latestState, action) => {
   // default value
   return { userName: 'Name', userAmount: 'Amount' };
 };
+
 function Form() {
   const [formReducer, setFormReducer] = useReducer(formReducerFn, {
     userName: 'Enter Name',
     userAmount: 'Enter Amount',
   });
 
+  const [form, setForm] = useState({
+    userName: 'any name',
+    userAmount: 'any amount',
+  });
+
   const nameChangeHandler = (e) => {
     setFormReducer({ type: 'NAME', value: e.target.value });
+    setForm((prevState) => {
+      return { ...prevState, userName: e.target.value };
+    });
   };
   const amountChangeHandler = (e) => {
     setFormReducer({ type: 'AMOUNT', value: e.target.value });
+    setForm((prevState) => {
+      return { ...prevState, userAmount: e.target.value };
+    });
   };
 
-  const formSubmitHandler = () => {
+  const formSubmitHandler = (e) => {
     e.preventDefault();
+   setForm({userName:'', userAmount:''}) // reset form after submit
   };
 
   return (
@@ -37,13 +50,13 @@ function Form() {
         <input
           className="input"
           type="text"
-          value={formReducer.userName}
+          value={form.userName}
           onChange={nameChangeHandler}
         />
         <input
           className="input"
           type="text"
-          value={formReducer.userAmount}
+          value={form.userAmount}
           onChange={amountChangeHandler}
         />
 
