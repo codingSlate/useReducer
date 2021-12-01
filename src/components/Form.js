@@ -4,18 +4,18 @@ import { useState, useEffect, useReducer } from 'react';
 
 // -------------------------------------------- reducer function that is called when action trigger
 const formReducerFn = (latestState, action) => {
-  console.log("from formReducerfn", latestState, action)
-  
-  if (action.type === 'NAME') {
-      console.log("from fn username ", latestState, action)
-      return { ...latestState, userName: action.value };
-    }
-    if (action.type === 'AMOUNT') {
-      return { ...latestState, userAmount: action.value };
-    }
+  console.log('from formReducerfn', latestState, action);
 
-    //   // default value
-    return { userName: 'Name', userAmount: 'Amount' };
+  if (action.type === 'NAME') {
+    console.log('from fn username ', latestState, action);
+    return { ...latestState, userName: action.value };
+  }
+  if (action.type === 'AMOUNT') {
+    return { ...latestState, userAmount: action.value };
+  }
+
+  //   // default value
+  return { userName: 'Name', userAmount: 'Amount' };
 };
 // --------------------------------------------
 function Form() {
@@ -30,7 +30,7 @@ function Form() {
     userName: 'any name',
     userAmount: 'any amount',
   });
-form
+
   // count character
   const [countChar, setCountChar] = useState('');
 
@@ -52,7 +52,7 @@ form
     return () => {
       clearTimeout(clearTimerID);
     };
-  // }, [form.userName, form.userAmount]);
+    // }, [form.userName, form.userAmount]);
   }, [form.userName, form.userAmount]);
 
   // -------------------------------------------------------nameChangeHandler
@@ -61,7 +61,7 @@ form
     setForm((prevState) => {
       return { ...prevState, userName: e.target.value };
     });
-    console.log("from useState", form) // checking useState
+    console.log('from useState', form); // checking useState
   };
 
   // -------------------------------------------------------amountChangeHandler
@@ -71,7 +71,7 @@ form
       return { ...prevState, userAmount: e.target.value };
     });
   };
-  
+
   // -------------------------------------------------------formSubmitHandler
   const formSubmitHandler = (e) => {
     e.preventDefault();
